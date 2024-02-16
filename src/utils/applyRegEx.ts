@@ -1,11 +1,10 @@
 export interface Log {
-  level: string;
+  severity: string;
   timestamp: string;
-  class: string;
-  Context: string;
-  "Instance ID": string;
-  "Thread Name": string;
-  Message: string;
+  "custom.class": string;
+  "custom.trace_id": string;
+  "service.name": string;
+  content: string;
 }
 
 export function applyRegEx(logString: string): Log | undefined {
@@ -15,18 +14,17 @@ export function applyRegEx(logString: string): Log | undefined {
   const match = logString.match(regex);
 
   if (match) {
-    const [, level, timestamp, instanceId, threadName, Message] = match;
+    const [, severity, timestamp, instanceId, threadName, message] = match;
 
     let item = threadName.split(" ");
 
     return {
-      level: level,
+      severity,
       timestamp,
-      class: item[1],
-      Context: `${item[2] || null} ${item[3] || null} ${item[4] || null}`,
-      "Instance ID": instanceId,
-      "Thread Name": threadName.split(" ")[0],
-      Message: `${item[5] || null} ${item[6] || null} ${item[7] || null}`,
+      "custom.class": item[1],
+      "custom.trace_id": instanceId,
+      "service.name": threadName.split(" ")[0],
+      content: `${item[5] || null} ${item[6] || null} ${item[7] || null}`,
     };
   } else {
     // console.log("No match found");

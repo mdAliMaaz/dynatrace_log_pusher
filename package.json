@@ -6,7 +6,9 @@
   "scripts": {
     "start:build": "tsc -w",
     "start:run": "nodemon dist/index.js",
-    "start": "concurrently npm:start:*"
+    "start": "concurrently npm:start:*",
+    "build":"tsc",
+    "dev" : "node dist/index.js"
   },
   "keywords": [],
   "author": "",

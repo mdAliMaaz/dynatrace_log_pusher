@@ -5,12 +5,11 @@ import { splitLogString } from "./utils/splitLogString";
 import { getTimeStamps } from "./utils/getTimeStamps";
 import { Log } from "./utils/applyRegEx";
 import { batchMaker } from "./utils/batchMaker";
-import { writeTimestamp } from "./utils/writeTimeStamp";
 import { pushToDynatrace } from "./utils/pushToDynatrace";
 import { checkForDublicate } from "./utils/checkForDublicate";
 
 dotenv.config();
-console.log("Starting");
+console.log("Starting 🔥");
 
 let now: any = new Date();
 
@@ -20,6 +19,7 @@ let dirName = process.env.DIR_NAME;
 
 // fetching all files path from provided directory
 let filePath: string[] = fetchFilesPath(dirName);
+
 // array for storing array of log objects
 let logsPerFile: Log[][] = [];
 
@@ -31,7 +31,7 @@ filePath.forEach((file) => {
   logsPerFile.push(arrayOfObjects);
 });
 
-let payLoad: Log[] = [];
+let unFilteredLogs: Log[] = [];
 
 // looping through each log object and checking if they are one day old if so then pushing them to payLoad
 for (let arrayOfLogs of logsPerFile) {
@@ -39,7 +39,7 @@ for (let arrayOfLogs of logsPerFile) {
     let log: Log = arrayOfLogs[i];
     let timestamp = new Date(log.timestamp);
     if (timestamp >= oneDayAgo && timestamp < now) {
-      payLoad.push(log);
+      unFilteredLogs.push(log);
     }
   }
 }
@@ -50,16 +50,15 @@ let timestamps = getTimeStamps(
 );
 
 // to store unPushed logs
-let unPushedLogs: Log[] = checkForDublicate(timestamps, payLoad);
+let unPushedLogs: Log[] = checkForDublicate(timestamps, unFilteredLogs);
 
 // spliting the logs array into multiple log arrays
-let arrayOfBatchs: Log[][] = batchMaker(unPushedLogs, 700);
+let arrayOfBatchs: Log[][] = batchMaker(unPushedLogs, 10);
 
-// TODO: write timestamp in file before pushing logs or after pushing logs
-// TODO: check for edge cases
-// TODO: write documentation
-// TODO: try to optimize
+// TODO: loop through each batch and push all of them after testing
+if (arrayOfBatchs.length > 0) {
+  pushToDynatrace(arrayOfBatchs[0]);
+}
 
-// pushToDynatrace(arrayOfBatchs[0]);
-
-console.log(arrayOfBatchs.length);
+console.log("logs Pushed:", arrayOfBatchs.length);
+console.log("End 🍀");

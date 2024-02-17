@@ -17,3 +17,7 @@ node_modules/
 
 # Ignore .env file containing sensitive information
 .env
+
+# Ignore data folder
+/data/
+

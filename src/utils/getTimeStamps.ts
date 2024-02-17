@@ -6,9 +6,9 @@ export function getTimeStamps(path: string): TIMESTAMP {
   try {
     let timestampString = readFile(path);
 
-    let timeStampArray = timestampString.trim().split(" ");
+    let timeStampArray: string[] = timestampString.trim().split(" ");
 
-    let timestamps = {};
+    let timestamps: TIMESTAMP = {};
 
     for (let i = 0; i < timeStampArray.length - 1; i++) {
       timestamps[timeStampArray[i]] = timeStampArray[i];

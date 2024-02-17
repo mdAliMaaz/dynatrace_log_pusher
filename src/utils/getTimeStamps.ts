@@ -1,6 +1,6 @@
 import { readFile } from "./readFile";
 
-type TIMESTAMP = { [ket: string]: string };
+type TIMESTAMP = { [key: string]: string };
 
 export function getTimeStamps(path: string): TIMESTAMP {
   try {

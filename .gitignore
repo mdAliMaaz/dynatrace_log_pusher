@@ -19,5 +19,5 @@ node_modules/
 .env
 
 # Ignore data folder
-/data/
+dummy_logs
 

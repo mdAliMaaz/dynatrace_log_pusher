@@ -16,8 +16,6 @@ export const fetchFilesPath = (
         // if item is directory  calling same function again
         arrayOfFiles = fetchFilesPath(`${dirPath}/${item}`, arrayOfFiles);
       } else {
-        // let file = path.join(dirPath, "/", item);
-        //@ts-ignore
         // if its a file then pushing to array
         arrayOfFiles.push(path.join(dirPath, "/", item));
       }
@@ -26,6 +24,6 @@ export const fetchFilesPath = (
     return arrayOfFiles;
   } catch (error) {
     console.log("Error While fetching files");
-    return;
+    return null;
   }
 };

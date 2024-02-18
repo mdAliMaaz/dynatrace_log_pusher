@@ -45,9 +45,7 @@ for (let arrayOfLogs of logsPerFile) {
 }
 
 // retriving the timestamp of pushed logs
-let timestamps = getTimeStamps(
-  "C:\\Users\\mohommed.maaz\\Desktop\\code\\dynatrace_log_pusher\\timestamp.log"
-);
+let timestamps = getTimeStamps();
 
 // to store unPushed logs
 let unPushedLogs: Log[] = checkForDublicate(timestamps, unFilteredLogs);
@@ -55,10 +53,12 @@ let unPushedLogs: Log[] = checkForDublicate(timestamps, unFilteredLogs);
 // spliting the logs array into multiple log arrays
 let arrayOfBatchs: Log[][] = batchMaker(unPushedLogs, 10);
 
-// TODO: loop through each batch and push all of them after testing
 if (arrayOfBatchs.length > 0) {
-  pushToDynatrace(arrayOfBatchs[0]);
+  arrayOfBatchs.forEach((batch) => {
+    pushToDynatrace(batch);
+  });
 }
 
-console.log("logs Pushed:", arrayOfBatchs.length);
+console.log("total logs", unFilteredLogs.length);
+console.log("total logs Pushed:", arrayOfBatchs.length);
 console.log("End 🍀");

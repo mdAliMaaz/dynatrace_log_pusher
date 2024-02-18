@@ -67,7 +67,7 @@ The project structure is as follows:
 
 - `src/`: Contains the source code files.
 - `src/utils/`: Contains utility functions.
-- `timestamp.log`: File containing timestamps of pushed logs.
+- `timestamp/`: folder that is used to store timestamps of pushed logs.
 
 ## Functionality
 

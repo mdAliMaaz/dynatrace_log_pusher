@@ -13,7 +13,7 @@ export async function pushToDynatrace(
   logs: Log[]
 ): Promise<AxiosResponse<any, any> | null> {
   if (!logs) {
-    console.log("NO logs available to pushToDynatrace");
+    console.log("N0 logs available to pushToDynatrace");
     return null;
   }
   try {
@@ -25,7 +25,7 @@ export async function pushToDynatrace(
     });
     if (response) {
       if (response.status >= 200 && response.status < 300) {
-        console.log("Status", response.status);
+        console.log("Status:", response.status);
         // if request was successful then write down timestamps of each log
         logs.forEach((item) => writeTimestamp(item.timestamp));
       }

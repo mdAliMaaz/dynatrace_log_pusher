@@ -1,9 +1,23 @@
 import fs from "fs";
-
+import path from "path";
+import { v4 as uuidv4 } from "uuid";
 const MAX_FILE_SIZE_BYTES = 5 * 1024 * 1024; //  maximum file size (5MB)
 
+let currentDate = new Date();
+
+const fileName = `itd-${currentDate.getDate()}-${
+  currentDate.getMonth() + 1
+}-${currentDate.getFullYear()}.log`;
+
+const pathToTimeStamps: string = path.resolve(
+  __dirname,
+  "..",
+  "..",
+  "timestamps",
+  fileName
+);
+
 export function writeTimestamp(timestamp: string) {
-  const fileName = "timestamp.log";
   let currentFileSize = 0;
 
   try {
@@ -19,13 +33,13 @@ export function writeTimestamp(timestamp: string) {
       MAX_FILE_SIZE_BYTES
     ) {
       // Change file by renaming existing file
-      const renamedFileName = `${fileName}.${Date.now()}`;
+      const renamedFileName = `${fileName.split(".")[0]}.${uuidv4()}.log`;
       fs.renameSync(fileName, renamedFileName);
       currentFileSize = 0; // Reset current file size after renaming
     }
 
     // Append timestamp to the file
-    fs.appendFileSync(fileName, timestamp + " ");
+    fs.appendFileSync(pathToTimeStamps, timestamp + " ");
   } catch (error) {
     console.error("Error occurred while writing timestamp:", error);
   }

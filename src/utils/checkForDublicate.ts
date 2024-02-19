@@ -24,7 +24,7 @@ export function checkForDublicate(
       }
     });
   }
-  console.log("dublicate logs:", dublicateLogs.length);
+  // console.log("dublicate logs:", dublicateLogs.length);
   return unPushedLogs;
 }
 

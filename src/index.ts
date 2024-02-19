@@ -50,15 +50,17 @@ let timestamps = getTimeStamps();
 // to store unPushed logs
 let unPushedLogs: Log[] = checkForDublicate(timestamps, unFilteredLogs);
 
+let batchSize = 15000;
 // spliting the logs array into multiple log arrays
-let arrayOfBatchs: Log[][] = batchMaker(unPushedLogs, 10);
+let arrayOfBatchs: Log[][] = batchMaker(unPushedLogs, batchSize);
 
-if (arrayOfBatchs.length > 0) {
+if (arrayOfBatchs.length) {
   arrayOfBatchs.forEach((batch) => {
     pushToDynatrace(batch);
+    console.log(batch);
   });
 }
-
 console.log("total logs", unFilteredLogs.length);
-console.log("total logs Pushed:", arrayOfBatchs.length);
+console.log("total batchs Pushed:", arrayOfBatchs.length);
+console.log(`logs per batch <= ${batchSize} `);
 console.log("End 🍀");

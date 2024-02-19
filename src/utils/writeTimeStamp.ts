@@ -5,9 +5,10 @@ const MAX_FILE_SIZE_BYTES = 5 * 1024 * 1024; //  maximum file size (5MB)
 
 let currentDate = new Date();
 
-const fileName = `itd-${currentDate.getDate()}-${
-  currentDate.getMonth() + 1
-}-${currentDate.getFullYear()}.log`;
+const fileName = `timestamps.log`;
+// const fileName = `itd-${currentDate.getDate()}-${
+//   currentDate.getMonth() + 1
+// }-${currentDate.getFullYear()}.log`;
 
 const pathToTimeStamps: string = path.resolve(
   __dirname,

@@ -1,6 +1,7 @@
 import dotenv from "dotenv";
 import { Log } from "./applyRegEx";
 import { writeTimestamp } from "./writeTimeStamp";
+import fetch from "node-fetch";
 
 dotenv.config();
 
@@ -14,7 +15,7 @@ export async function pushToDynatrace(logs: Log[]): Promise<Response | null> {
     return null;
   }
   try {
-    const response = await fetch(apiUrl!, {
+    const response: any = await fetch(apiUrl!, {
       method: "POST",
       headers: {
         Authorization: `Api-Token ${apiToken}`,

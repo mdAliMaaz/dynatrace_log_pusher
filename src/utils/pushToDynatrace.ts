@@ -1,4 +1,3 @@
-import axios, { AxiosResponse } from "axios";
 import dotenv from "dotenv";
 import { Log } from "./applyRegEx";
 import { writeTimestamp } from "./writeTimeStamp";
@@ -9,30 +8,27 @@ const apiUrl = process.env.API_URL;
 
 const apiToken = process.env.API_TOKEN;
 
-export async function pushToDynatrace(
-  logs: Log[]
-): Promise<AxiosResponse<any, any> | null> {
+export async function pushToDynatrace(logs: Log[]): Promise<Response | null> {
   if (!logs) {
-    console.log("N0 logs available to pushToDynatrace");
+    console.log("No logs available to pushToDynatrace");
     return null;
   }
   try {
-    const response = await axios.post(apiUrl!, logs, {
+    const response = await fetch(apiUrl!, {
+      method: "POST",
       headers: {
         Authorization: `Api-Token ${apiToken}`,
         "Content-Type": "application/json",
       },
+      body: JSON.stringify(logs),
     });
-    if (response) {
-      if (response.status >= 200 && response.status < 300) {
-        console.log("Status:", response.status);
-        // if request was successful then write down timestamps of each log
-        logs.forEach((item) => writeTimestamp(item.timestamp));
-      }
+    if (response.ok) {
+      console.log("Status:", response.status);
+      // if request was successful then write down timestamps of each log
+      logs.forEach((item) => writeTimestamp(item.timestamp));
     }
     return response;
   } catch (error: any) {
-    console.log(error);
     console.log("Error while pushing logs to Dynatrace", error.message);
     return null;
   }

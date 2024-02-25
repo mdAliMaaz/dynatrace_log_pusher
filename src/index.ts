@@ -51,7 +51,7 @@ for (let arrayOfLogs of logsPerFile) {
 // retriving the timestamp of pushed logs
 let timestamps = getTimeStamps();
 
-console.log("Checking if we already pushed that log to dynatrace...");
+console.log("Filtering out dublicate logs...");
 // to store unPushed logs
 let unPushedLogs: Log[] = checkForDublicate(timestamps, validLogs);
 
@@ -59,21 +59,21 @@ let batchSize = 17000;
 console.log(
   `Creating batched of logs if size of unPushed logs is greater than ${batchSize}`
 );
-if (unPushedLogs.length > batchSize) {
-  let arrayOfBatchs: Log[][] = batchMaker(unPushedLogs, batchSize);
+// if (unPushedLogs.length > batchSize) {
+//   let arrayOfBatchs: Log[][] = batchMaker(unPushedLogs, batchSize);
 
-  if (arrayOfBatchs.length) {
-    arrayOfBatchs.forEach((batch) => {
-      pushToDynatrace(batch);
-    });
-  }
-  console.log("total logs", validLogs.length);
-  console.log("total batchs Pushed:", arrayOfBatchs.length);
-} else {
-  pushToDynatrace(unPushedLogs);
-  console.log("total logs", validLogs.length);
-  console.log("total batchs Pushed:", unPushedLogs.length);
-}
+//   if (arrayOfBatchs.length) {
+//     arrayOfBatchs.forEach((batch) => {
+//       pushToDynatrace(batch);
+//     });
+//   }
+//   console.log("total logs", validLogs.length);
+//   console.log("total batchs Pushed:", arrayOfBatchs.length);
+// } else {
+//   pushToDynatrace(unPushedLogs);
+//   console.log("total logs", validLogs.length);
+//   console.log("total batchs Pushed:", unPushedLogs.length);
+// }
 // spliting the logs array into multiple log arrays
 console.log(`logs per batch ${batchSize} or less `);
 console.log("End 🍀");

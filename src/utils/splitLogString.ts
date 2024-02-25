@@ -1,7 +1,6 @@
 import { readFile } from "./readFile";
 import { applyRegEx, Log } from "./applyRegEx";
 
-// TODO: test with new Dynatrace account
 export function splitLogString(filePath: string): Log[] {
   // reading content from log file
   let logLines = readFile(filePath);
@@ -12,9 +11,11 @@ export function splitLogString(filePath: string): Log[] {
   if (individualLogsArray.length > 0) {
     for (let i = 0; i < individualLogsArray.length - 1; i++) {
       const element = individualLogsArray[i].trim();
-      let log = applyRegEx(element);
-      if (log) {
-        result.push(log);
+      if (element) {
+        let log = applyRegEx(element);
+        if (log) {
+          result.push(log);
+        }
       }
     }
   }

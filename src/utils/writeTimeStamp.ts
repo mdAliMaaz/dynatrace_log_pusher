@@ -1,14 +1,9 @@
 import fs from "fs";
 import path from "path";
 import { v4 as uuidv4 } from "uuid";
-const MAX_FILE_SIZE_BYTES = 5 * 1024 * 1024; //  maximum file size (5MB)
-
-let currentDate = new Date();
+const MAX_FILE_SIZE_BYTES = 10 * 1024 * 1024; //  maximum file size (10MB)
 
 const fileName = `timestamps.log`;
-// const fileName = `itd-${currentDate.getDate()}-${
-//   currentDate.getMonth() + 1
-// }-${currentDate.getFullYear()}.log`;
 
 const pathToTimeStamps: string = path.resolve(
   __dirname,
